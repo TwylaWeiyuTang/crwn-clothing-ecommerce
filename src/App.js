@@ -5,8 +5,9 @@ import { Routes } from 'react-router-dom';
 import ShopComponent from './pages/shoppage/ShopComponent';
 import HeaderComponent from './components/header/HeaderComponent';
 import SignInandSignUp from './pages/sign-in-and-sign-up/SignInandSignUp';
-import { auth } from './firebase/firebaseUtils';
+import { auth, createUserProfileDocument } from './firebase/firebaseUtils';
 import { onAuthStateChanged } from 'firebase/auth';
+import { onSnapshot } from "firebase/firestore";
 import React from 'react';
 
 class App extends React.Component {
@@ -21,14 +22,24 @@ class App extends React.Component {
   unsubscribeFromAuth = null
 
   componentDidMount() {
-    this.unsubscribeFromAuth = onAuthStateChanged(auth, (user) => {
-      // whenever any changes occur on Firebase from any source related to this application,
-      // firebase sends out a message that the user Auth state has changed
-      // so this is an open subscription, thus we need to close the subscription, 
-      // when this unmount
-      this.setState({currentUser: user})
+    this.unsubscribeFromAuth = onAuthStateChanged(auth, async(userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
 
-      console.log(user)
+        onSnapshot(userRef, (doc) => { //onSnapshot method is for us to listen to the update of
+          // the user
+          this.setState({
+            currentUser: {
+              id: doc.id, // change the user state to include the id we get from the firebase
+              ...doc.data() // change the user state to include any other user information we get from the doc.data()
+            }
+          })
+          console.log(this.state)
+        })
+      }
+      this.setState({currentUser: userAuth}) // if the userAuth does not exist (false), then set
+      // our user state to null
+
     })
   }
 
