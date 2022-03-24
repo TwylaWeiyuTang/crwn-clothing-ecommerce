@@ -1,7 +1,9 @@
 import React from 'react';
 import FormInputComponent from '../form-input/FormInputComponent';
 import CustomButtonComponent from '../custom-button/CustomButtonComponent';
-import { signInWithGoogle } from '../../firebase/firebaseUtils';
+import { signInWithGoogle, auth } from '../../firebase/firebaseUtils';
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import './signInStyle.scss'
 
 class SignIn extends React.Component {
@@ -14,10 +16,18 @@ class SignIn extends React.Component {
         }
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault() // this will prevent the default submit action from firing
 
-        this.setState({email: '', password: ''})
+        const { email, password } = this.state
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+            // if the above code succeed, we will clear our sign in form
+            this.setState({email: '', password: ''})
+        } catch(error) {
+            console.log(error)
+        }
     }
 
     handleChange = event => {

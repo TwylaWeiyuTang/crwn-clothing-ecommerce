@@ -34,7 +34,6 @@ class App extends React.Component {
               ...doc.data() // change the user state to include any other user information we get from the doc.data()
             }
           })
-          console.log(this.state)
         })
       }
       this.setState({currentUser: userAuth}) // if the userAuth does not exist (false), then set
