@@ -1,15 +1,14 @@
 import './App.css';
-import { Route } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HomepageComponent from './pages/homepage/HomepageComponent';
-import { Routes } from 'react-router-dom';
 import ShopComponent from './pages/shoppage/ShopComponent';
 import HeaderComponent from './components/header/HeaderComponent';
 import SignInandSignUp from './pages/sign-in-and-sign-up/SignInandSignUp';
 import { auth, createUserProfileDocument } from './firebase/firebaseUtils';
 import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from "firebase/firestore";
-import {setCurrentUser, SetCurrentUser} from './redux/user/userActions'
+import {setCurrentUser} from './redux/user/userActions'
 import React from 'react';
 
 class App extends React.Component {
@@ -48,16 +47,23 @@ class App extends React.Component {
         <Routes>
           <Route exact path='/' element = {<HomepageComponent />} />
           <Route path='/shop' element = {<ShopComponent />} />
-          <Route path='/signin' element = {<SignInandSignUp />} />
+          <Route path='/signin' element= {this.props.currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
+          {/* if there is a signed in user, then redirect them to Homepage,
+          otherwise go to sign in and sign up page */}
         </Routes>
       </div>
     );
   }
 }
 
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser
+})
+
 const mapDispatchToProps = dispatch  => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)) // set the user payload by using dispatch function
 })
 
-export default connect(null, mapDispatchToProps)(App);
-// the first parameter is null, because we don't need any state from our reducer now
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+// we pass in mapStateToProps, mapDispatchToProps so we can have access to this.state.currentUser
+// and this.props.setCurrentUser
