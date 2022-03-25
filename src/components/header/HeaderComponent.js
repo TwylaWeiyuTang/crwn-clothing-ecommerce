@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { auth } from '../../firebase/firebaseUtils'
 import { signOut } from 'firebase/auth'
 
@@ -32,4 +33,11 @@ const HeaderComponent = ({currentUser}) => {
   )
 }
 
-export default HeaderComponent
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser // user is user in root reducer, and from user reducer
+    // we can get currentUser
+})
+
+export default connect(mapStateToProps)(HeaderComponent) 
+// connect is a higher order component
+// this is for us to use the user state that is stored in redux  user reducer
