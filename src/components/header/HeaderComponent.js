@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { auth } from '../../firebase/firebaseUtils'
 import { signOut } from 'firebase/auth'
+import CartIconComponent from '../cart-icon/CartIconComponent'
+import CartDropdown from '../cart-dropdown/CartDropdown'
 
 import './headerStyle.scss'
 import { ReactComponent as Logo} from '../../assets/crown.svg'
 
 
-const HeaderComponent = ({currentUser}) => {
+const HeaderComponent = ({currentUser, hidden}) => {
   return (
     <div className='header'>
         <Link to='/' className='logo-container'>
@@ -24,18 +26,23 @@ const HeaderComponent = ({currentUser}) => {
             </Link>
             {
                 currentUser ? // if the user is signed in, then the sign out button shows
-                <div className='option' onClick={() => signOut(auth)}>SIGN OUT</div>
+                (<div className='option' onClick={() => signOut(auth)}>SIGN OUT</div>)
                 : // if the user is not signed in, we will have them sign in first
-                <Link className='option' to='/signin'> SIGN IN </Link>
+                (<Link className='option' to='/signin'> SIGN IN </Link>)
             }
+            <CartIconComponent />
         </div>
+        {
+            hidden ? null : // if the hidden state is true, then render nothing
+            <CartDropdown />
+        }
     </div>
   )
 }
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser // user is user in root reducer, and from user reducer
-    // we can get currentUser
+const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
+    currentUser, //state property
+    hidden // state property
 })
 
 export default connect(mapStateToProps)(HeaderComponent) 
