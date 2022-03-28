@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import './cartIconStyle.scss'
 import { toggleCartHidden } from '../../redux/cart/cartActions'
 import { selectCartItemsCount } from '../../redux/cart/cartSelectors'
@@ -18,8 +19,8 @@ const mapDispatchToProps = dispatch => ({
     toggleCartHidden: () => dispatch(toggleCartHidden())
 }) // trigger the toggleCartHidden in cart reducer
 
-const mapStateToProps = (state) => ({ // pull off cart state from root reducer
-  itemCount: selectCartItemsCount(state) 
+const mapStateToProps = createStructuredSelector ({ // pull off cart state from root reducer
+  itemCount: selectCartItemsCount
   // whole state gotten passed in, and it goes to selectors to reference that state
   // selectCartItemsCount refers to selectCartItems, selectCartItems refers to selectCart, which
   // uses cart state from the whole state

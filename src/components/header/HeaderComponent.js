@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import { auth } from '../../firebase/firebaseUtils'
 import { signOut } from 'firebase/auth'
 import CartIconComponent from '../cart-icon/CartIconComponent'
 import CartDropdown from '../cart-dropdown/CartDropdown'
+import { selectCartHidden } from '../../redux/cart/cartSelectors'
+import { selectCurrentUser } from '../../redux/user/userSelectors'
 
 import './headerStyle.scss'
 import { ReactComponent as Logo} from '../../assets/crown.svg'
@@ -40,9 +43,10 @@ const HeaderComponent = ({currentUser, hidden}) => {
   )
 }
 
-const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
-    currentUser, //state property
-    hidden // state property
+const mapStateToProps = createStructuredSelector({ // createStructuredSelector will automatically
+    // pass our top level state into each selector
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
 })
 
 export default connect(mapStateToProps)(HeaderComponent) 

@@ -1,14 +1,17 @@
 import './App.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import HomepageComponent from './pages/homepage/HomepageComponent';
 import ShopComponent from './pages/shoppage/ShopComponent';
 import HeaderComponent from './components/header/HeaderComponent';
 import SignInandSignUp from './pages/sign-in-and-sign-up/SignInandSignUp';
+import CheckoutComponent from './pages/checkout/CheckoutComponent';
 import { auth, createUserProfileDocument } from './firebase/firebaseUtils';
 import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from "firebase/firestore";
 import {setCurrentUser} from './redux/user/userActions'
+import { selectCurrentUser } from './redux/user/userSelectors';
 import React from 'react';
 
 class App extends React.Component {
@@ -47,6 +50,7 @@ class App extends React.Component {
         <Routes>
           <Route exact path='/' element = {<HomepageComponent />} />
           <Route path='/shop' element = {<ShopComponent />} />
+          <Route exact path='/checkout' element = {<CheckoutComponent />} />
           <Route path='/signin' element= {this.props.currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
           {/* if there is a signed in user, then redirect them to Homepage,
           otherwise go to sign in and sign up page */}
@@ -56,9 +60,11 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
+// we use createStructuredSelector, so we don't need to pass in (state) to different selectors each
+// every time when we have a new selector being mapped here
 
 const mapDispatchToProps = dispatch  => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)) // set the user payload by using dispatch function

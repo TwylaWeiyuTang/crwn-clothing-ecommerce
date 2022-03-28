@@ -13,6 +13,11 @@ export const selectCartItems = createSelector(
 )
 // this is a memorior selector
 
+export const selectCartHidden = createSelector(
+    [selectCart],
+    cart => cart.hidden
+)
+
 export const selectCartItemsCount = createSelector(
     [selectCartItems], // get our cart items from the above output selector
     cartItems =>
@@ -24,3 +29,12 @@ export const selectCartItemsCount = createSelector(
   // 0  means it starts from adding 0 with the first element in the array
 
 ) // this gives us the total quantity of our cart items
+
+export const selectCartTotal = createSelector(
+    [selectCartItems],
+    cartItems => 
+        cartItems.reduce(
+            (accumulatedPrice, cartItem) => 
+                accumulatedPrice+ cartItem.quantity * cartItem.price, 0
+        )
+)
