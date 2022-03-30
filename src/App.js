@@ -49,7 +49,10 @@ class App extends React.Component {
         <HeaderComponent />
         <Routes>
           <Route exact path='/' element = {<HomepageComponent />} />
-          <Route path='/shop' element = {<ShopComponent />} />
+          <Route path='/shop/*' element = {<ShopComponent />} />
+          {/* By appending a /* to the end of our /shop path, we're essentially telling 
+          React Router that Shop has a nested Routes component and our parent path should match 
+          for /shop as well as any other location that matches the /shop/* pattern */}
           <Route exact path='/checkout' element = {<CheckoutComponent />} />
           <Route path='/signin' element= {this.props.currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
           {/* if there is a signed in user, then redirect them to Homepage,
