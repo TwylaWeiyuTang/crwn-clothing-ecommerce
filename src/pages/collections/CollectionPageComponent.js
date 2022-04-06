@@ -10,11 +10,14 @@ const CollectionComponent = () => {
   const { collectionId } = useParams()
   const collection = useSelector((state) => selectCollection(collectionId)(state))
   // this is like mapStateToProps
-  
-  console.log(collection)
+  const {title, items} = collection
+
   return (
-    <div className='collection'>
-        <h2>Collection PAGE</h2>
+    <div className='collection-page'>
+        <h2 className='title'>{title}</h2>
+        <div className='items'>
+          {items.map(item => <CollectionItemComponent key={item.id} item={item}/>)}
+        </div>
     </div>
   )
 }
