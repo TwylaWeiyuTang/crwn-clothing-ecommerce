@@ -7,30 +7,30 @@ import CartItemComponent from '../cart-item/CartItemComponent'
 import { selectCartItems } from '../../redux/cart/cartSelectors'
 import { toggleCartHidden } from '../../redux/cart/cartActions';
 
-import './cartDropdownStyle.scss'
+import { CartDropdownContainer, CartItemContainer, EmptyMessageContainer, CartDropdownButton } from './CartDropdownStyle';
 
 const CartDropdown = ({cartItems, dispatch}) => {
   const history = useNavigate();
 
   return (
-    <div className='cart-dropdown'>
-        <div className='cart-items'>
+    <CartDropdownContainer>
+        <CartItemContainer>
           {
             cartItems.length ?(
             cartItems.map(cartItem => 
              (<CartItemComponent key={cartItem.id} item = {cartItem} />)))
              // if cartitems has length, which means there is item in the cart
             :
-            (<span className='empty-message'>Your cart is empty</span>)
+            (<EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>)
             // if there is no length, then the cart is empty
             }
-        </div>
-        <CustomButtonComponent onClick={() => {
+        </CartItemContainer>
+        <CartDropdownButton onClick={() => {
           history('/checkout');
           dispatch(toggleCartHidden()) // this will toggle the cart icon again, so the cart
           // dropdown will be closed automatically while we being redirected to checkout page
-        }}>GO TO CHECKOUT</CustomButtonComponent>
-    </div>
+        }}>GO TO CHECKOUT</CartDropdownButton>
+    </CartDropdownContainer>
   )
 }
 

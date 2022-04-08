@@ -9,37 +9,37 @@ import CartDropdown from '../cart-dropdown/CartDropdown'
 import { selectCartHidden } from '../../redux/cart/cartSelectors'
 import { selectCurrentUser } from '../../redux/user/userSelectors'
 
-import './headerStyle.scss'
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink, OptionDiv } from './HeaderStyle'
 import { ReactComponent as Logo} from '../../assets/crown.svg'
 
 
 const HeaderComponent = ({currentUser, hidden}) => {
   return (
-    <div className='header'>
-        <Link to='/' className='logo-container'>
+    <HeaderContainer>
+        <LogoContainer to='/'>
             <Logo className='logo'/>
-        </Link>
+        </LogoContainer>
 
-        <div className='options'>
-            <Link className='option' to='/shop'>
+        <OptionsContainer>
+            <OptionLink to='/shop'>
                 SHOP
-            </Link>
-            <Link className='option' to='/contact'>
+            </OptionLink>
+            <OptionLink to='/contact'>
                 CONTACT
-            </Link>
+            </OptionLink>
             {
                 currentUser ? // if the user is signed in, then the sign out button shows
-                (<div className='option' onClick={() => signOut(auth)}>SIGN OUT</div>)
+                (<OptionDiv onClick={() => signOut(auth)}>SIGN OUT</OptionDiv>)
                 : // if the user is not signed in, we will have them sign in first
-                (<Link className='option' to='/signin'> SIGN IN </Link>)
+                (<OptionLink className='option' to='/signin'> SIGN IN </OptionLink>)
             }
             <CartIconComponent />
-        </div>
+        </OptionsContainer>
         {
             hidden ? null : // if the hidden state is true, then render nothing
             <CartDropdown />
         }
-    </div>
+    </HeaderContainer>
   )
 }
 

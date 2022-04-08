@@ -1,20 +1,20 @@
 import React from 'react'
-import './formInputStyle.scss'
+import { FormInputContainer, GroupContainer, FormInputLabel } from './FormInputStyle'
 
-const FormInputComponent = ({handleChange, label, ...otherProps}) => {
+const FormInputComponent = ({handleChange, label, ...props}) => {
   return (
-    <div className='group'>
-        <input className='form-input' onChange={handleChange} {...otherProps} />
+    <GroupContainer>
+        <FormInputContainer onChange={handleChange} {...props} />
         { 
             label ? /* If there is a label props being passed in, then we will generate a lable html */
-            (<label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>
+            (<FormInputLabel className={props.value.length ? 'shrink' : ''}>
                 {/* if there is the value being typed by the user in the label field, 
                 then we will apply the property of shrink, otherwise it will be an empty string  */}
                 {label}
-            </label>)
+            </FormInputLabel>)
             : null
         }
-    </div>
+    </GroupContainer>
   )
 }
 
