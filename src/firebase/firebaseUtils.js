@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"
+import { addDoc, collection, getFirestore, query, writeBatch } from "firebase/firestore"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,11 +18,12 @@ const firebaseConfig = {
   measurementId: "G-73LN0WZTYJ"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore through Firebase
-const db = getFirestore();
+export const db = getFirestore(app);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return; // if there is no userAuth (user is not signed in), return nothing
@@ -49,6 +50,49 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     return docRef
 }
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, `${collectionKey}`)
+    // create an collection reference by passing in the key value
+    // here it's the name of the collectionsa
+    console.log(collectionRef)
+
+    const batch = writeBatch(db) // execute multiple write operations as a single batch
+    // so if the write successful, it means all the documents are added, if it fails, then 
+    // everything fails together
+
+    // did not use batch write here, because if we want to use batch write, we need the document
+    // reference that already exists
+    // but below we are initiating our document reference for the first time
+    
+    objectsToAdd.forEach(async obj => {
+        const newDocRef = await addDoc(collection(db, `${collectionKey}`), {obj})
+        // create document reference with auto-generated id, by using addDoc() and collection name
+        // witout setting any real data 
+    })
+
+    
+
+} // create a new collection by passing in an relevant key and objects for the key
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+    const transformedCollection = collections.docs.map( doc => {
+        const {title, items} = doc.data()["obj"]
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        }
+    })
+    return transformedCollection.reduce((accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;
+        // passing in different collection's title into our accumulator object and make its value
+        // equals to that relative collection's collection value
+        // so here the title of our five collections are the keys
+        return accumulator
+    }, {}) // the initial value is an empty object
+} // fetching the collections data from firestore
 
 const provider = new GoogleAuthProvider();
 export const auth = getAuth();
