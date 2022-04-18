@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import CollectionsOverview from '../../components/collections-overview/CollectionsOverview';
 import CollectionComponent from '../collections/CollectionPageComponent';
@@ -8,25 +8,23 @@ import { connect } from 'react-redux';
 import { updateCollections } from '../../redux/shop/shopActions';
 import WithSpinner from '../../components/with-spinner/WithSpinner';
 
-class ShopComponent extends React.Component {
-    state = {
-        loading: true
-    } // this is the same as writing constructor
+const ShopComponent = ({updateCollections}) => {
+    const [loading, setLoading] = useState(true)
 
-    unsubscribeFromSnapshot = null // the snapshot is going to be the represent of our collections
-    // data from firestore
-
-    componentDidMount() {
-        const {updateCollections} = this.props
+    useEffect(() => {
         const collectionRef = collection(db, 'collections')
-        this.unsubscribeFromSnapshot = onSnapshot(collectionRef, async (doc) => {
+       
+        const unsubscribeFromCollections = onSnapshot(collectionRef, async (doc) => {
             const collectionsMap = convertCollectionsSnapshotToMap(doc)
             updateCollections(collectionsMap)
-            this.setState({loading: false})
+            setLoading(false)
         })
-    }
-    render () {
-        const {loading} = this.state
+
+        return () => {
+            unsubscribeFromCollections()
+        } // clean up from the useEffect, this is like componentWillUnmount
+    }, [updateCollections])
+ 
         return (
         <div className='shop-page'>
             <Routes>
@@ -39,7 +37,7 @@ class ShopComponent extends React.Component {
         </div>
         )
     }
-}
+
 
 const mapDispatchToProps = dispatch => ({
     updateCollections: collectionsMap => dispatch(updateCollections(collectionsMap))

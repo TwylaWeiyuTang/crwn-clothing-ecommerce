@@ -12,16 +12,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from "firebase/firestore";
 import {setCurrentUser} from './redux/user/userActions'
 import { selectCurrentUser } from './redux/user/userSelectors';
-import React from 'react';
+import {useEffect} from 'react';
 
-class App extends React.Component {
-
-  unsubscribeFromAuth = null
-
-  componentDidMount() {
-    const {setCurrentUser} = this.props
-
-    this.unsubscribeFromAuth = onAuthStateChanged(auth, async(userAuth) => {
+const App = ({setCurrentUser, currentUser}) => {
+  useEffect(() => {
+     onAuthStateChanged(auth, async(userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
 
@@ -31,19 +26,11 @@ class App extends React.Component {
               id: doc.id, // change the user state to include the id we get from the firebase
               ...doc.data() // change the user state to include any other user information we get from the doc.data()
           })
-        })
-      }
-      setCurrentUser(userAuth) // if the userAuth does not exist (false), then set
+        })}
+      setCurrentUser(userAuth)})// if the userAuth does not exist (false), then set
       // our user state to null
+  }, [setCurrentUser])
 
-    })
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth(); // close the subscription to the Firebase user management
-  }
-
-  render() {
     return (
       <div>
         <HeaderComponent />
@@ -54,14 +41,14 @@ class App extends React.Component {
           React Router that Shop has a nested Routes component and our parent path should match 
           for /shop as well as any other location that matches the /shop/* pattern */}
           <Route exact path='/checkout' element = {<CheckoutComponent />} />
-          <Route path='/signin' element= {this.props.currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
+          <Route path='/signin' element= {currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
           {/* if there is a signed in user, then redirect them to Homepage,
           otherwise go to sign in and sign up page */}
         </Routes>
       </div>
-    );
-  }
-}
+    )
+        }
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
