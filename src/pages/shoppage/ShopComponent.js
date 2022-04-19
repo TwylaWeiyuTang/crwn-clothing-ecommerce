@@ -4,26 +4,27 @@ import CollectionsOverview from '../../components/collections-overview/Collectio
 import CollectionComponent from '../collections/CollectionPageComponent';
 import { db, convertCollectionsSnapshotToMap } from '../../firebase/firebaseUtils';
 import { onSnapshot, collection } from 'firebase/firestore';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateCollections } from '../../redux/shop/shopActions';
 import WithSpinner from '../../components/with-spinner/WithSpinner';
 
-const ShopComponent = ({updateCollections}) => {
+const ShopComponent = () => {
     const [loading, setLoading] = useState(true)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const collectionRef = collection(db, 'collections')
        
         const unsubscribeFromCollections = onSnapshot(collectionRef, async (doc) => {
             const collectionsMap = convertCollectionsSnapshotToMap(doc)
-            updateCollections(collectionsMap)
+            dispatch(updateCollections(collectionsMap))
             setLoading(false)
         })
 
         return () => {
             unsubscribeFromCollections()
         } // clean up from the useEffect, this is like componentWillUnmount
-    }, [updateCollections])
+    }, [dispatch])
  
         return (
         <div className='shop-page'>
@@ -39,8 +40,5 @@ const ShopComponent = ({updateCollections}) => {
     }
 
 
-const mapDispatchToProps = dispatch => ({
-    updateCollections: collectionsMap => dispatch(updateCollections(collectionsMap))
-})
 
-export default connect (null, mapDispatchToProps) (ShopComponent)
+export default ShopComponent

@@ -1,7 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import { useSelector } from 'react-redux'
 import { auth } from '../../firebase/firebaseUtils'
 import { signOut } from 'firebase/auth'
 import CartIconComponent from '../cart-icon/CartIconComponent'
@@ -13,7 +11,9 @@ import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink, OptionDiv
 import { ReactComponent as Logo} from '../../assets/crown.svg'
 
 
-const HeaderComponent = ({currentUser, hidden}) => {
+const HeaderComponent = () => {
+    const currentUser = useSelector(selectCurrentUser)
+    const hidden = useSelector(selectCartHidden)
   return (
     <HeaderContainer>
         <LogoContainer to='/'>
@@ -42,13 +42,6 @@ const HeaderComponent = ({currentUser, hidden}) => {
     </HeaderContainer>
   )
 }
-
-const mapStateToProps = createStructuredSelector({ // createStructuredSelector will automatically
-    // pass our top level state into each selector
-    currentUser: selectCurrentUser,
-    hidden: selectCartHidden
-})
-
-export default connect(mapStateToProps)(HeaderComponent) 
+export default HeaderComponent
 // connect is a higher order component
 // this is for us to use the user state that is stored in redux  user reducer

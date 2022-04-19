@@ -1,7 +1,6 @@
 import './App.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
 import HomepageComponent from './pages/homepage/HomepageComponent';
 import ShopComponent from './pages/shoppage/ShopComponent';
 import HeaderComponent from './components/header/HeaderComponent';
@@ -14,7 +13,9 @@ import {setCurrentUser} from './redux/user/userActions'
 import { selectCurrentUser } from './redux/user/userSelectors';
 import {useEffect} from 'react';
 
-const App = ({setCurrentUser, currentUser}) => {
+const App = () => {
+  const currentUser = useSelector(selectCurrentUser)
+    const dispatch = useDispatch()
   useEffect(() => {
      onAuthStateChanged(auth, async(userAuth) => {
       if (userAuth) {
@@ -22,14 +23,14 @@ const App = ({setCurrentUser, currentUser}) => {
 
         onSnapshot(userRef, (doc) => { //onSnapshot method is for us to listen to the update of
           // the user
-          setCurrentUser({
+          dispatch(setCurrentUser({
               id: doc.id, // change the user state to include the id we get from the firebase
               ...doc.data() // change the user state to include any other user information we get from the doc.data()
-          })
+          }))
         })}
-      setCurrentUser(userAuth)})// if the userAuth does not exist (false), then set
+      dispatch(setCurrentUser(userAuth))})// if the userAuth does not exist (false), then set
       // our user state to null
-  }, [setCurrentUser])
+  }, [dispatch])
 
     return (
       <div>
@@ -49,17 +50,6 @@ const App = ({setCurrentUser, currentUser}) => {
     )
         }
 
-
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
-})
-// we use createStructuredSelector, so we don't need to pass in (state) to different selectors each
-// every time when we have a new selector being mapped here
-
-const mapDispatchToProps = dispatch  => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)) // set the user payload by using dispatch function
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
 // we pass in mapStateToProps, mapDispatchToProps so we can have access to this.state.currentUser
 // and this.props.setCurrentUser
