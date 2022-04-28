@@ -1,52 +1,81 @@
-import React, {useState} from 'react';
-import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
-
-const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const handleSubmit = async (event) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    const {error} = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      elements,
-      confirmParams: {
-        return_url: 'https://example.com/order/123/complete',
-      },
-    });
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import axios from "axios"
+import React, { useState } from 'react'
+import { useSelector } from "react-redux"
+import { selectCartTotal } from "../../redux/cart/cartSelectors"
 
 
-    if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      setErrorMessage(error.message);
+const CARD_OPTIONS = {
+	iconStyle: "solid",
+	style: {
+		base: {
+			iconColor: "#c4f0ff",
+			fontWeight: 500,
+			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+			fontSize: "16px",
+			fontSmoothing: "antialiased",
+			":-webkit-autofill": { color: "#fce883" },
+			"::placeholder": { color: "#87bbfd" }
+		},
+		invalid: {
+			iconColor: "#ffc7ee",
+			color: "#ffc7ee"
+		}
+	}
+}
+
+export default function PaymentForm() {
+    const [success, setSuccess ] = useState(false)
+    const stripe = useStripe()
+    const elements = useElements()
+    const total = useSelector(selectCartTotal)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const {error, paymentMethod} = await stripe.createPaymentMethod({
+            type: "card",
+            card: elements.getElement(CardElement)
+        })
+
+
+    if(!error) {
+        try {
+            const {id} = paymentMethod
+            const response = await axios.post("http://localhost:5000/payment", {
+                amount: total * 100,
+                id
+            })
+
+            if(response.data.success) {
+                console.log("Successful payment")
+                setSuccess(true)
+            }
+
+        } catch (error) {
+            console.log("Error", error)
+        }
     } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+        console.log(error.message)
     }
-  };
+}
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button disabled={!stripe}>Submit</button>
-      {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
-    </form>
-  )
-};
-
-export default CheckoutForm;
+    return (
+        <>
+        {!success ? 
+        <form onSubmit={handleSubmit}>
+            <fieldset className="FormGroup" >
+                <div className="FormRow" style={{width: "400px"}}>
+                    <CardElement options={CARD_OPTIONS} />
+                </div>
+            </fieldset>
+            <button>Pay</button>
+        </form>
+        :
+       <div>
+           <h2>You just bought a sweet spatula congrats this is the best decision of you're life</h2>
+       </div> 
+        }
+            
+        </>
+    )
+}

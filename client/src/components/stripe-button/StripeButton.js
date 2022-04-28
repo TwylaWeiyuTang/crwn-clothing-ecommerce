@@ -1,38 +1,15 @@
-import React from 'react'
-import axios from 'axios'
-import StripeCheckout from 'react-stripe-checkout'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentForm from "../stripe-checkout-form/StripeCheckout";
 
-const StripeButton = ({price}) => {
-  const priceForStripe = price * 100
-  const publishableKey = 'pk_test_51KksksENpvpK9J8psPLe7fxjiNMjwNLM7GxWowCDdDm1XTaFSs8LKrK1Fef5nFLKOa8SSMVsRJ6a1kQXt7HrAsse00qgExWD6S'
-  const onToken = token => {
-    axios({
-      url: 'payment',
-      method: 'post',
-      data: {
-        amount: priceForStripe,
-      }
-    }).then(response => {
-      alert('Payment Successful')
-    }).catch(error => {
-      console.log('Payment error: ', JSON.parse(error))
-      alert('There was an issue with your payment.')
-    })
-  }
-  return (
-    <StripeCheckout 
-      label='Pay Now'
-      name='CRWN Clothing Ltd.'
-      billingAddress
-      shippingAddress
-      image='https://svgshare.com/i/CUz.svg'
-      description={`Your total is $${price}`}
-      amount={priceForStripe}
-      panelLabel='Pay Now'
-      token={onToken}
-      stripeKey={publishableKey}
-    />
-  )
+const PUBLIC_KEY = "pk_test_51KksksENpvpK9J8psPLe7fxjiNMjwNLM7GxWowCDdDm1XTaFSs8LKrK1Fef5nFLKOa8SSMVsRJ6a1kQXt7HrAsse00qgExWD6S"
+
+const stripeTestPromise = loadStripe(PUBLIC_KEY)
+
+export default function StripeButton() {
+	return (
+		<Elements stripe={stripeTestPromise}>
+			<PaymentForm />
+		</Elements>
+	)
 }
-
-export default StripeButton

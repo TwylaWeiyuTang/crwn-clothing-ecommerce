@@ -2,11 +2,14 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
 
 if (process.env.NODE_ENV !== 'production') require ('dotenv').config()
 // if we are not in production mode, means we are in development mode, we will load in dotenv
 // to use our secret key
+
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 
 const app = express()
 const port = process.env.PORT || 5000;
@@ -33,19 +36,27 @@ app.listen(port, error => {
     console.log('Server running on port ' + port)
 })
 
-app.post('/payment', async (req, res) => { // set up the /payment url
-    const body = {
-        source: req.body.token.id,
-        amount: req.body.amount,
-        currency: 'usd'
+app.post('/payment', cors(), async (req, res) => { // set up the /payment url
+    let {amount, id} = req.body
+    try {
+        const payment = await stripe.paymentIntents.create({
+            amount,
+            currency: "USD",
+            description: "CRWN Clothing",
+            payment_method: id,
+            confirm: true
+        })
+        console.log("Payment", payment)
+        res.json({
+            message: "Payment successful",
+            success: true
+        })
+    } catch(error) {
+        console.log("Error", error)
+        res.json({
+            message: "Payment failed",
+            success: false
+        })
     }
 
-    stripe.charges.create(body, (stripeErr, stripeRes) => {
-        if (stripeErr) {
-            res.status(500).send({error: stripeErr}) // if there is a stripe error, then we 
-            // set the response status to 500 and send the error message to the client
-        } else {
-            res.status(200).send({success : stripeRes})
-        }
-    })
   });
