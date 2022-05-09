@@ -3,8 +3,9 @@ import FormInputComponent from '../form-input/FormInputComponent';
 import CustomButtonComponent from '../custom-button/CustomButtonComponent';
 import { signInWithGoogle, auth } from '../../firebase/firebaseUtils';
 import { signInWithEmailAndPassword } from "firebase/auth";
-
-import './signInStyle.scss'
+import { SignInContainer,
+    SignInTitle,
+    ButtonsBarContainer} from './SignInStyles'
 
 const SignIn = () => {
     const [userCrendentials, setCrendentials] = useState({email: '', password: ''})
@@ -29,8 +30,8 @@ const SignIn = () => {
 
 
         return (
-            <div className='sign-in'>
-                <h2>I already have an account</h2>
+            <SignInContainer>
+                <SignInTitle>I already have an account</SignInTitle>
                 <span>Sign in with your email and password</span>
 
                 <form onSubmit={handleSubmit}>
@@ -50,14 +51,14 @@ const SignIn = () => {
                     handleChange={handleChange} 
                     required/>
 
-                    <div className='buttons'>
+                    <ButtonsBarContainer>
                         <CustomButtonComponent type='submit'> Sign in</CustomButtonComponent>
                         <CustomButtonComponent type='button' onClick={signInWithGoogle} isGoogleSignIn>
                             Sign in with Google
                         </CustomButtonComponent>
-                    </div>
+                    </ButtonsBarContainer>
                 </form>
-            </div>
+            </SignInContainer>
         )
 
 }

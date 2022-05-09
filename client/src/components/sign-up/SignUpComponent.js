@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import FormInputComponent from '../form-input/FormInputComponent'
 import CustomButtonComponent from '../custom-button/CustomButtonComponent'
-import './signUpStyle.scss'
+import { SignUpContainer, SignUpTitle } from './SignUpStyles'
 
 import { auth, createUserProfileDocument } from '../../firebase/firebaseUtils'
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -41,8 +41,8 @@ const SignUpComponent = () => {
     }
 
         return (
-            <div className='sign-up'>
-                <h2 className='title'>I do not have a account</h2>
+            <SignUpContainer>
+                <SignUpTitle>I do not have a account</SignUpTitle>
                 <span>Sign up with your email and password</span>
                 <form className='sign-up-form' onSubmit={handleSubmit}>
                     <FormInputComponent type='text' name='displayName' value={displayName} onChange = {handleChange} label='Display Name' required />
@@ -51,7 +51,7 @@ const SignUpComponent = () => {
                     <FormInputComponent type='password' name='confirmPassword' value={confirmPassword} onChange = {handleChange} label='Confirm Password' required />
                     <CustomButtonComponent type='submit'>SIGN UP</CustomButtonComponent>
                 </form>
-            </div>
+            </SignUpContainer>
           )
     }
 

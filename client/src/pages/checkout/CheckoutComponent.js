@@ -1,51 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import {Elements, useElements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
-import axios from 'axios'
 
 import CheckoutItem from '../../components/checkout-item/CheckoutItem'
 import StripeButton from '../../components/stripe-button/StripeButton'
-import StripeCheckout from '../../components/stripe-checkout-form/StripeCheckout'
 
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cartSelectors'
-import './checkoutStyle.scss'
-
-const stripePromise = loadStripe('pk_test_51KksksENpvpK9J8psPLe7fxjiNMjwNLM7GxWowCDdDm1XTaFSs8LKrK1Fef5nFLKOa8SSMVsRJ6a1kQXt7HrAsse00qgExWD6S');
+import { CheckoutPageContainer,
+  CheckoutHeaderContainer,
+  HeaderBlockContainer,
+  TotalContainer,
+  WarningContainer} from './CheckOutStyles'
 
 const CheckoutComponent = () => {
   const cartItems = useSelector(selectCartItems)
   const total = useSelector(selectCartTotal)
 
   return (
-    <div className='checkout-page'>
-      <div className='checkout-header'>
-        <div className='header-block'>
+    <CheckoutPageContainer>
+      <CheckoutHeaderContainer>
+        <HeaderBlockContainer>
           <span>Product</span>
-        </div>
-        <div className='header-block'>
+        </HeaderBlockContainer>
+        <HeaderBlockContainer>
           <span>Description</span>
-        </div>
-        <div className='header-block'>
+        </HeaderBlockContainer>
+        <HeaderBlockContainer>
           <span>Quantity</span>
-        </div>
-        <div className='header-block'>
+        </HeaderBlockContainer>
+        <HeaderBlockContainer>
           <span>Price</span>
-        </div>
-        <div className='header-block'>
+        </HeaderBlockContainer>
+        <HeaderBlockContainer>
           <span>Remove</span>
-        </div>
-      </div>
+        </HeaderBlockContainer>
+      </CheckoutHeaderContainer>
       {
         cartItems.map(cartItem => 
           <CheckoutItem key={cartItem.id} cartItem={cartItem} />
         )
       }
-      <div className='total'>
+      <TotalContainer>
         <span>TOTAL: ${total}</span>
-      </div>
+      </TotalContainer>
+      <WarningContainer>
+      *Please use the following test credit card for payments*
+      <br />
+      4242 4242 4242 4242 - Exp: 01/20 - CVV: 123
+    </WarningContainer>
       <StripeButton price={total}/>
-    </div>
+    </CheckoutPageContainer>
   )
 }
 
