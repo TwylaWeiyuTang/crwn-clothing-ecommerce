@@ -1,4 +1,4 @@
-import './App.css';
+import { GlobalStyle } from './globalStyles';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import HomepageComponent from './pages/homepage/HomepageComponent';
@@ -34,6 +34,7 @@ const App = () => {
 
     return (
       <div>
+        <GlobalStyle />
         <HeaderComponent />
         <Routes>
           <Route exact path='/' element = {<HomepageComponent />} />

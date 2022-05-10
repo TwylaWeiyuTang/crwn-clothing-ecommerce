@@ -3,6 +3,7 @@ import axios from "axios"
 import React, { useState } from 'react'
 import { useSelector } from "react-redux"
 import { selectCartTotal } from "../../redux/cart/cartSelectors"
+import { CardContainer, PayButtonContainer } from "./StripeCheckoutStyles"
 
 
 const CARD_OPTIONS = {
@@ -64,11 +65,13 @@ export default function PaymentForm() {
         {!success ? 
         <form onSubmit={handleSubmit}>
             <fieldset className="FormGroup" >
-                <div className="FormRow" style={{width: "400px"}}>
+                <CardContainer >
                     <CardElement options={CARD_OPTIONS} />
-                </div>
+                </CardContainer>
             </fieldset>
-            <button>Pay</button>
+            <PayButtonContainer>
+                Pay
+            </PayButtonContainer>
         </form>
         :
        <div>
