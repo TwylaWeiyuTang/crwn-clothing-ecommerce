@@ -1,17 +1,24 @@
+import { lazy, Suspense } from 'react'
 import { GlobalStyle } from './globalStyles';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import HomepageComponent from './pages/homepage/HomepageComponent';
-import ShopComponent from './pages/shoppage/ShopComponent';
 import HeaderComponent from './components/header/HeaderComponent';
-import SignInandSignUp from './pages/sign-in-and-sign-up/SignInandSignUp';
-import CheckoutComponent from './pages/checkout/CheckoutComponent';
+import WithSpinner from './components/with-spinner/WithSpinner'
+import ErrorBoundary from './components/error-boundary/ErrorBoundary'
 import { auth, createUserProfileDocument } from './firebase/firebaseUtils';
 import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from "firebase/firestore";
 import {setCurrentUser} from './redux/user/userActions'
 import { selectCurrentUser } from './redux/user/userSelectors';
 import {useEffect} from 'react';
+
+const HomepageComponent = lazy(() => import ('./pages/homepage/HomepageComponent'))
+// when the app mounts for the first time, the chunks will render all the code except for Homepage
+// component, the only time this component will be loaded is when we go to the home page router
+
+const ShopComponent = lazy(() => import ('./pages/shoppage/ShopComponent'))
+const SignInandSignUp = lazy(() => import ('./pages/sign-in-and-sign-up/SignInandSignUp'))
+const CheckoutComponent = lazy(() => import ('./pages/checkout/CheckoutComponent'))
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser)
@@ -36,6 +43,8 @@ const App = () => {
       <div>
         <GlobalStyle />
         <HeaderComponent />
+        <ErrorBoundary>
+        <Suspense fallback={<WithSpinner />}>
         <Routes>
           <Route exact path='/' element = {<HomepageComponent />} />
           <Route path='/shop/*' element = {<ShopComponent />} />
@@ -47,6 +56,8 @@ const App = () => {
           {/* if there is a signed in user, then redirect them to Homepage,
           otherwise go to sign in and sign up page */}
         </Routes>
+        </Suspense>
+        </ErrorBoundary>
       </div>
     )
         }
