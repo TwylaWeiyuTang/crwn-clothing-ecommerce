@@ -14,6 +14,13 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 
 const app = express()
 const port = process.env.PORT || 5000;
+const corsOptions ={
+    origin:true, 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+}
 
 app.use(bodyParser.json())
 
@@ -21,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: true})) // this is heping us to get rid
 // and spaces in the url we are getting or passing
 app.use(enforce.HTTPS({trustProtoHeader: true}))
 // this will enforce all the http request from heroku to https request
-app.use(cors()) // enable cross origin requests, for example, we can allow localhost:3000 to access
+app.use(cors(corsOptions)) // enable cross origin requests, for example, we can allow localhost:3000 to access
 // localhost:5000
 
 if(process.env.NODE_ENV === 'production') {
@@ -42,7 +49,7 @@ app.get('/service-worker.js', (req,res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'))
 }) // for PWA
 
-app.post('/payment', cors(), async (req, res) => { // set up the /payment url
+app.post('/payment', cors(corsOptions), async (req, res) => { // set up the /payment url
     let {amount, id} = req.body
     try {
         const payment = await stripe.paymentIntents.create({
@@ -52,6 +59,7 @@ app.post('/payment', cors(), async (req, res) => { // set up the /payment url
             payment_method: id,
             confirm: true
         })
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
         console.log("Payment", payment)
         res.json({
             message: "Payment successful",

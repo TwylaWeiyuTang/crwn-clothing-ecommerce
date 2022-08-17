@@ -42,10 +42,21 @@ export default function PaymentForm() {
     if(!error) {
         try {
             const {id} = paymentMethod
-            const response = await axios.post("http://localhost:5000/payment", {
+            const postData = {
                 amount: total * 100,
                 id
-            })
+            }
+
+            let axiosConfig = {
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Origin"
+                }
+              };
+
+            const response = await axios.post("http://localhost:5000/payment", postData, axiosConfig
+            )
 
             if(response.data.success) {
                 console.log("Successful payment")
