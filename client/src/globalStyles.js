@@ -1,18 +1,27 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+     *,*::before, *::after {
+        margin: 0;
+        padding: 0;
+    }
+    
     body {
     font-family: "Encode Sans Condensed";
-    padding: 20px 60px;
+    overflow-x: hidden;
 
     @media screen and (max-width: 800px) {
-        padding: 10px;
     }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
     }
 
     a {
     text-decoration: none;
-    color: black;
+    color: inherit;
     }
 
     * {

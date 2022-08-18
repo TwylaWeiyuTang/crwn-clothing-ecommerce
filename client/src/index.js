@@ -6,6 +6,7 @@ import {PersistGate} from 'redux-persist/integration/react'
 // is any thing stored in our local storage session and persist them
 
 import './index.css';
+import 'locomotive-scroll/dist/locomotive-scroll.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './App'; 
 import reportWebVitals from './reportWebVitals';

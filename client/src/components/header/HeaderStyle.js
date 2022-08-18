@@ -10,6 +10,11 @@ const OptionContainerStyles = css`
 export const HeaderContainer = styled.div`
     height: 70px;
     width: 100%;
+
+    position: absolute;
+    top: 0;
+    z-index: 12;
+
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
@@ -38,6 +43,7 @@ export const OptionsContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    color: inherit;
 
     @media screen and (max-width: 800px) {
         width: 80%;
