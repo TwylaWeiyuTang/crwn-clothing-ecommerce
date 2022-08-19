@@ -20,6 +20,7 @@ import 'locomotive-scroll/dist/locomotive-scroll.css'
 
 import { dark } from './styles/Themes';
 import ScrollTriggerProxy from './components/ScrollTriggerProxy'
+import CheckoutSuccess from './pages/checkout/CheckoutSuccess';
 
 const HomepageComponent = lazy(() => import ('./pages/homepage/HomepageComponent'))
 // when the app mounts for the first time, the chunks will render all the code except for Homepage
@@ -88,6 +89,7 @@ const App = () => {
           React Router that Shop has a nested Routes component and our parent path should match 
           for /shop as well as any other location that matches the /shop/* pattern */}
           <Route exact path='/checkout' element = {<CheckoutComponent />} />
+          <Route path='/checkout-success' element={<CheckoutSuccess />} />
           <Route exact path='/signin' element= {currentUser ? (<Navigate replace to='/' />) : (<SignInandSignUp />)} />
           {/* if there is a signed in user, then redirect them to Homepage,
           otherwise go to sign in and sign up page */}

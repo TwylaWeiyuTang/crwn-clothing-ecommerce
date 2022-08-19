@@ -1,15 +1,24 @@
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import PaymentForm from "../stripe-checkout-form/StripeCheckout";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/user/userSelectors";
+import CustomButtonComponent from "../custom-button/CustomButtonComponent";
 
-const PUBLIC_KEY = "pk_test_51KksksENpvpK9J8psPLe7fxjiNMjwNLM7GxWowCDdDm1XTaFSs8LKrK1Fef5nFLKOa8SSMVsRJ6a1kQXt7HrAsse00qgExWD6S"
 
-const stripeTestPromise = loadStripe(PUBLIC_KEY)
+export default function StripeButton({cartItems}) {
+	const user = useSelector(selectCurrentUser)
+	console.log(cartItems)
 
-export default function StripeButton() {
+	const handleCheckout = () => {
+		axios.post("http://localhost:5000/create-checkout-session", {
+			cartItems,
+			userId: user.id,
+		}).then((res) => {
+			if (res.data.url) {
+				window.location.href = res.data.url
+			}
+		}).catch((err) => console.log(err.message))
+	}
 	return (
-		<Elements stripe={stripeTestPromise}>
-			<PaymentForm />
-		</Elements>
+		<CustomButtonComponent onClick={() => handleCheckout()}>Check Out</CustomButtonComponent>
 	)
 }

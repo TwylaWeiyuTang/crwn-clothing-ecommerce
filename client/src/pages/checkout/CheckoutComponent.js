@@ -47,7 +47,7 @@ const CheckoutComponent = () => {
       <br />
       4242 4242 4242 4242 - Exp: 01/25 - CVV: 123
     </WarningContainer>
-      <StripeButton price={total}/>
+      <StripeButton cartItems={cartItems} />
     </CheckoutPageContainer>
   )
 }
