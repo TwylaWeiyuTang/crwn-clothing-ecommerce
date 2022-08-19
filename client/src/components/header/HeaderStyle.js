@@ -11,7 +11,7 @@ export const HeaderContainer = styled.div`
     height: 70px;
     width: 100%;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 12;
 
@@ -29,7 +29,7 @@ export const HeaderContainer = styled.div`
 export const LogoContainer = styled(Link)` // this is a styled link component
     height: 100%;
     width: 70px;
-    padding: 25px;
+    padding: 1rem 2rem;
 
     @media screen and (max-width: 800px) {
         width: 50px;
@@ -38,12 +38,13 @@ export const LogoContainer = styled(Link)` // this is a styled link component
 `
 
 export const OptionsContainer = styled.div`
-    width: 50%;
+    width: 20vw;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     color: inherit;
+    padding-right: 2rem;
 
     @media screen and (max-width: 800px) {
         width: 80%;

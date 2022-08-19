@@ -6,11 +6,15 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { SignInContainer,
     SignInTitle,
     ButtonsBarContainer} from './SignInStyles'
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [userCrendentials, setCrendentials] = useState({email: '', password: ''})
 
     const { email, password } = userCrendentials
+
+    const navigate = useNavigate()
+
     const handleSubmit = async event => {
         event.preventDefault() // this will prevent the default submit action from firing
 
@@ -18,6 +22,7 @@ const SignIn = () => {
             await signInWithEmailAndPassword(auth, email, password)
             // if the above code succeed, we will clear our sign in form
             setCrendentials({email: '', password: ''})
+            navigate("/shop")
         } catch(error) {
             console.log(error)
         }

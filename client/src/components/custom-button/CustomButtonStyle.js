@@ -25,12 +25,12 @@ const invertedButtonStyle = css`
 `
 
 const googleSignInStyles = css`
-    background-color: #4285f4;
+    background-color: rgba(255, 0, 80);
     color: white;
     border: none;
 
     &:hover {
-      background-color: #357ae8;
+      background-color: #FF3977;
       border: none;
     }
 `

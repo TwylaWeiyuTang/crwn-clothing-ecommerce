@@ -3,12 +3,14 @@ import CustomButtonComponent from '../custom-button/CustomButtonComponent'
 
 export const CartDropdownContainer = styled.div`
     position: absolute;
-    width: 240px;
-    height: 340px;
+    width: 25vw;
+    height: 60vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     padding: 20px;
-    border: 1px solid black;
+    border: 1px solid grey;
     background-color: white;
     top: 80px;
     right: 70px;
@@ -17,17 +19,20 @@ export const CartDropdownContainer = styled.div`
 
 export const EmptyMessageContainer = styled.span`
     font-size: 18px;
-    margin: 50px auto;
+    margin: auto auto;
 `
 
 export const CartItemContainer = styled.div`
-    height: 240px;
+    height: 46vh;
     display: flex;
     flex-direction: column;
     overflow: scroll;
 `
 
 export const CartDropdownButton = styled(CustomButtonComponent)`
-    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    align-items: center;
+    margin-bottom: 15px;
 `
 

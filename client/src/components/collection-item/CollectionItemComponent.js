@@ -18,7 +18,7 @@ const CollectionItemComponent = ({item}) => {
         <BackgroundImage  imageUrl={imageUrl}/>
         <CollectionFooterContainer>
             <NameContainer> {name} </NameContainer>
-            <PriceContainer> {price} </PriceContainer>
+            <PriceContainer> ${price} </PriceContainer>
         </CollectionFooterContainer>
         <AddButton onClick={() => dispatch(addItem(item))} inverted> 
           Add to cart 

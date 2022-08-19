@@ -62,9 +62,11 @@ const Title = styled.h1`
     z-index: 11;
 `
 const Text = styled.div`
-    font-size: ${props => props.theme.fontlg};
+    font-size: 1.2rem;
     font-weight: 300;
-    width: 20%;
+    font-family: 'Roboto', sans-serif;
+
+    width: 25%;
     position: absolute;
     padding: 2rem;
     top: 10;

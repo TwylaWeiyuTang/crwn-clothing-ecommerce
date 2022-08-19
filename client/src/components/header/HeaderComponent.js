@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { auth } from '../../firebase/firebaseUtils'
 import { signOut } from 'firebase/auth'
@@ -14,6 +14,13 @@ import { ReactComponent as Logo} from '../../assets/crown.svg'
 const HeaderComponent = () => {
     const currentUser = useSelector(selectCurrentUser)
     const hidden = useSelector(selectCartHidden)
+
+    // useLayoutEffect(() => {
+    //     if (!hidden) {
+    //         document.body.style.overflow = 'hidden';
+    //     }
+    // }, [hidden])
+
   return (
     <HeaderContainer>
         <LogoContainer to='/'>
@@ -23,9 +30,6 @@ const HeaderComponent = () => {
         <OptionsContainer>
             <OptionLink to='/shop'>
                 SHOP
-            </OptionLink>
-            <OptionLink to='/contact'>
-                CONTACT
             </OptionLink>
             {
                 currentUser ? // if the user is signed in, then the sign out button shows

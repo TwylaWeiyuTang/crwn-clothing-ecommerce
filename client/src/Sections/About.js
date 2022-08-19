@@ -12,6 +12,7 @@ const Section = styled.section`
     display: flex;
 
     margin: 0 auto;
+    margin-bottom: 5rem;
 `
 
 const Title = styled.h1`
@@ -44,7 +45,7 @@ const Left = styled.div`
     z-index: 5;
     margin-top: 20%;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
 `
 const Right = styled.div`
     width: 50%;
@@ -85,10 +86,12 @@ const About = () => {
         Fashion is an ART that can not be grasped by everyone.
         <br/>
         <br/>
+        <br/>
         We are very dedicated to making our products. 
         We offer unique and creative products to a wide range of people. 
         We have a variety of styles, but for most people, all of the options are in the box. 
         We specialize in making things that make you happy.
+        <br/>
         <br/>
         <br/>
         We strive to build on our vision. As a fashion label, we do our best to create amazing experiences for all people. 

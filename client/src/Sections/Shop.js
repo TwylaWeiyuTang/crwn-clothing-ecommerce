@@ -35,17 +35,14 @@ const Title = styled.h1`
     font-weight: 300;
 
     text-shadow: 2px 2px 2px rgba(0, 242, 234, 0.8);
-    color: rgba(255, 0, 80, 0.7);
+    color: rgba(255, 0, 80, 0.8);
     position: absolute;
-    top: 1rem;
-    right: 5%;
+    writing-mode: vertical-lr;
     z-index: 11;
 `
-
 const Left = styled.div`
-    width: 30%;
-    background-color: rgba(255, 232, 26, 0.7);
-    color: black;
+    width: 20rem;
+    background-color: #FFED4E;
 
     min-height: 100vh;
     z-index: 5;
@@ -67,8 +64,7 @@ const Left = styled.div`
 
 const Right = styled.div`
     position: absolute;
-    left: 5%;
-    padding-left: 30%;
+    left: 30%;
     min-height: 100vh;
 
     background-color: none;
@@ -176,18 +172,10 @@ const Shop = () => {
   return (
     <div>
     <Section ref={ref}>
-        <Title data-scroll data-scroll-speedd="-1">New Collection</Title>
-        {/* <Left>
-            <p>
-                The brand new collection is currently being developed in USA. 
-                We create our products using best quality material, including the use of some of the pure fabrics to make our products. 
-                All products are made using the best materials, from the finest cotton to the finest fabrics.
-                <br/><br/>
-                We have lots of different clothing options like shoes, jackets and dresses. 
-                Not only clothes but we also provide unique Jewellery as well. 
-                It is great for us to carry our new clothes all around the country and look different.
-            </p>
-        </Left> */}
+        {/* <Title data-scroll data-scroll-speedd="-1">New Collection</Title> */}
+        <Left>
+            <Title>New Collection</Title>
+        </Left>
 
         <Right ref={horizontalRef}>
             <Product img={img1} title='Mens' />
