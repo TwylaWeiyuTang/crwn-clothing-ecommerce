@@ -166,7 +166,6 @@ const Shop = () => {
         return () => {
             // Let's clear instances
             tl.kill()
-            // ScrollTrigger.kill()
         }
     })
   return (

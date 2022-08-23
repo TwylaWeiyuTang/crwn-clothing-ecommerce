@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getFirestore, query, writeBatch } from "firebase/firestore"
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -98,5 +98,15 @@ const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 
 provider.setCustomParameters({prompt: 'select_account'});
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+export const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+    
+    // if user is signed in with Google, then direct them to the shop page
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            window.location = '/shop'
+        }
+      });
+   
+};
 //  prompt users to sign in with their Google Accounts by opening a pop-up window 
