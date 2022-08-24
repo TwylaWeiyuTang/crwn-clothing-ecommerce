@@ -31,7 +31,7 @@ const LogoContainer = styled.div`
 
     h3{
         font-size: ${props => props.theme.fontxl};
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Roboto', sans-serif;
     }
 `
 const FooterComponent = styled(motion.footer)`

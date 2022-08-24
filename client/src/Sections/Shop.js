@@ -31,8 +31,8 @@ const Section = styled.section`
 
 const Title = styled.h1`
     font-size: ${props => props.theme.fontxxxl};
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 
     text-shadow: 2px 2px 2px rgba(0, 242, 234, 0.8);
     color: rgba(255, 0, 80, 0.8);

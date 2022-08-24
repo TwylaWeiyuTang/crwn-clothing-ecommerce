@@ -9,6 +9,7 @@ import { selectCurrentUser } from '../../redux/user/userSelectors'
 
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink, OptionDiv } from './HeaderStyle'
 import { ReactComponent as Logo} from '../../assets/crown.svg'
+import logo from '../../assets/Star 3.png'
 
 
 const HeaderComponent = () => {
@@ -24,7 +25,7 @@ const HeaderComponent = () => {
   return (
     <HeaderContainer>
         <LogoContainer to='/'>
-            <Logo className='logo'/>
+            <img src={logo} alt='logo' width={"50vw"} className='logo'/>
         </LogoContainer>
 
         <OptionsContainer>

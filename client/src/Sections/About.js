@@ -17,8 +17,8 @@ const Section = styled.section`
 
 const Title = styled.h1`
     font-size: ${props => props.theme.fontBig};
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 
     position: absolute;
     top: 1rem;
@@ -27,8 +27,8 @@ const Title = styled.h1`
 `
 const Title2 = styled.h1`
     font-size: ${props => props.theme.fontBig};
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
     color: rgba(255, 0, 80, 0.6);
 
     position: absolute;

@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormInputComponent from '../form-input/FormInputComponent'
 import CustomButtonComponent from '../custom-button/CustomButtonComponent'
 import { SignUpContainer, SignUpTitle } from './SignUpStyles'
@@ -15,6 +16,8 @@ const SignUpComponent = () => {
    })
 
    const {displayName, email, password, confirmPassword} = userCrendentials
+   
+   const navigate = useNavigate()
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -29,6 +32,9 @@ const SignUpComponent = () => {
 
             await createUserProfileDocument(user, {displayName}); // this is to create the user
             // into our database
+
+            // redirect signed up user to the shop page
+            navigate('/shop')
 
         }catch(error) {
             console.log(error)

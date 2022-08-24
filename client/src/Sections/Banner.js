@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const BannerComponent = styled.h1`
     font-size: ${props => props.theme.fontxxxl};
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: ${props => props.theme.text};
     white-space: nowrap;
     text-transform: uppercase;
