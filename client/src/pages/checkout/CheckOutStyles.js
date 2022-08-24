@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const CheckoutPageContainer = styled.div`
-  width: 55%;
+  width: 75%;
   min-height: 100vh;
+  position: relative;
 
   padding-top: 8rem;
   display: flex;
@@ -47,9 +48,19 @@ export const TotalContainer = styled.div`
 `;
 
 export const WarningContainer = styled.div`
+  background-color: rgba(255, 213, 63, 40%);
+  border: 1px solid rgba(255, 213, 63);
+  border-radius: 15px;
+  width: 50vw;
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
+
+  margin-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  position: absolute;
+  bottom: 0;
+
   font-size: 24px;
   color: red;
 

@@ -14,7 +14,7 @@ export const ImageContainer = styled.div`
   width: 23%;
   padding-right: 15px;
   img {
-    width: 100%;
+    width: 50%;
     height: 100%;
   }
 `;
@@ -26,7 +26,7 @@ export const TextContainer = styled.span`
 export const QuantityContainer = styled(TextContainer)`
   display: flex;
   span {
-    margin: 0 10px;
+    margin: 0 15px;
   }
   div {
     cursor: pointer;
@@ -34,6 +34,6 @@ export const QuantityContainer = styled(TextContainer)`
 `;
 
 export const RemoveButtonContainer = styled.div`
-  padding-left: 12px;
+  padding-left: 15px;
   cursor: pointer;
 `;
