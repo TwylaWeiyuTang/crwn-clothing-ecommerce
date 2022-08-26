@@ -119,7 +119,7 @@ app.post('/create-checkout-session', cors(corsOptions), async (req, res) => {
         ],
       line_items,
       mode: 'payment',
-      success_url: `${process.env.CLIENT_URL}/checkout-success`,
+      success_url: `${process.env.CLIENT_URL}/checkout-success` || '/checkout-success',
       cancel_url: `${process.env.CLIENT_URL}/checkout`,
     });
   
