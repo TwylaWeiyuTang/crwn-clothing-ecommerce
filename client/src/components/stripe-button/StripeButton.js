@@ -5,13 +5,12 @@ import CustomButtonComponent from "../custom-button/CustomButtonComponent";
 
 
 export default function StripeButton({cartItems}) {
-	const user = useSelector(selectCurrentUser)
-	console.log(cartItems)
+	// const user = useSelector(selectCurrentUser)
+	// console.log(cartItems)
 
 	const handleCheckout = () => {
 		axios.post("http://localhost:5000/create-checkout-session", {
 			cartItems,
-			userId: user.id,
 		}).then((res) => {
 			if (res.data.url) {
 				window.location.href = res.data.url
