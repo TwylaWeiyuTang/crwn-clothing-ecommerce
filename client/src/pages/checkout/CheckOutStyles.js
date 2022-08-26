@@ -54,12 +54,10 @@ export const WarningContainer = styled.div`
   width: 50vw;
   text-align: center;
 
+  margin-top: 60px;
   margin-bottom: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
-
-  position: absolute;
-  bottom: 0;
 
   font-size: 24px;
   color: red;
