@@ -119,8 +119,8 @@ app.get('/service-worker.js', (req,res) => {
             ],
           line_items,
           mode: 'payment',
-          success_url: `https://crwn-clothing-twyla.herokuapp.com/checkout-success/`,
-          cancel_url:  `https://crwn-clothing-twyla.herokuapp.com/checkout/`,
+          success_url: `https://vibe-ecommerce.herokuapp.com/checkout-success/`,
+          cancel_url:  `https://vibe-ecommerce.herokuapp.com/checkout/`,
         });
       
         res.send({url: session.url});
