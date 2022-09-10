@@ -61,4 +61,9 @@ export const CustomButtonContainer = styled.button `
   justify-content: center; /* To make sure the text in the button is always aligned in the center */
 
   ${getButtonStyles}
+
+  @media screen and (max-width: 600px) {
+       font-size: 15px;
+       padding: 0;
+    }
 `

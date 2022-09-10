@@ -17,6 +17,7 @@ export const CollectionTitle = styled.h2`
   font-size: 38px;
   margin: 0 auto 4rem;
   font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
   font-weight: 400;
 `;
 

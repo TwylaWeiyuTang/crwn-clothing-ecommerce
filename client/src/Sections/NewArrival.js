@@ -34,6 +34,14 @@ const Overlay = styled.div`
     border-style: solid;
     border-color: #FF3977;
     z-index: 11;
+
+    @media screen and (max-width: 600px) {
+        width: 100vw !important;
+        left: unset !important;
+        transform: translate(0%, -50%);
+
+        box-shadow: 0 0 0 10vh ${props => props.theme.text};
+    }
 `
 
 const Overlay2 = styled.div`
@@ -72,6 +80,14 @@ const Text = styled.div`
     top: 10;
     right: 0;
     z-index: 11;
+
+    @media screen and (max-width: 600px) {
+        left: 0;
+        right: unset !important;
+        width: 50vw !important;
+        font-size: 1rem !important;
+        top: unset;
+    }
 `
 
 const Container = styled.div`
@@ -87,6 +103,11 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 600px) {
+        width: 49vw;
+        transform: translate(-1%, 0);
+    }
 `
 
 const Item = styled.div`

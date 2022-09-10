@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SignInAndSignUpContainer = styled.div`
   width: 70vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -10,7 +10,8 @@ export const SignInAndSignUpContainer = styled.div`
   padding-top: 8rem;
 
   @media screen and (max-width: 800px) {
-    width: 100vw;
-    flex-direction: column;
+    width: 100vw !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
 `;

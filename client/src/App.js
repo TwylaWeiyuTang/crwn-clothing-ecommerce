@@ -78,7 +78,7 @@ const App = () => {
         <ScrollTriggerProxy />
         <AnimatePresence>
         
-          <main className='App' data-scroll-container ref={containerRef}>
+          <main className='App' data-scroll-container ref={containerRef} style={{overflow: "hidden scroll"}}>
           <HeaderComponent />
         <ErrorBoundary>
         <Suspense fallback={<WithSpinner />}>

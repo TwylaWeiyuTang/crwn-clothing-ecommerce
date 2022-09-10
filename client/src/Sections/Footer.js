@@ -33,6 +33,12 @@ const LogoContainer = styled.div`
         font-size: ${props => props.theme.fontxl};
         font-family: 'Roboto', sans-serif;
     }
+
+    @media screen and (max-width: 600px) {
+       img {
+        width: 20vw;
+       }
+    }
 `
 const FooterComponent = styled(motion.footer)`
     width: 80vw;
@@ -60,6 +66,12 @@ const FooterComponent = styled(motion.footer)`
             transform: scale(1.1);
         }
     }
+
+    @media screen and (max-width: 600px) {
+       ul {
+        justify-content: center;
+       }
+    }
 `
 
 const Bottom = styled.div`
@@ -72,6 +84,11 @@ const Bottom = styled.div`
     align-items: center;
     a {
         text-decoration: underline;
+    }
+
+    @media screen and (max-width: 600px) {
+       flex-direction: column;
+       justify-content: center;
     }
 `
 

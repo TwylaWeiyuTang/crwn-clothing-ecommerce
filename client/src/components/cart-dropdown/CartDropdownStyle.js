@@ -15,6 +15,10 @@ export const CartDropdownContainer = styled.div`
     top: 80px;
     right: 70px;
     z-index: 5;
+
+    @media screen and (max-width: 600px) {
+        width: 70vw;
+    }
 `
 
 export const EmptyMessageContainer = styled.span`

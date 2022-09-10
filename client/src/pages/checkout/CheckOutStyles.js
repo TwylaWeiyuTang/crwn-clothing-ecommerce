@@ -35,6 +35,13 @@ export const HeaderBlockContainer = styled.div`
   &:last-child {
     width: 8%;
   }
+
+  @media screen and (max-width: 600px) {
+    &:nth-child(1) {
+      width: 20%;
+    }
+  }
+  
 `;
 
 export const TotalContainer = styled.div`
@@ -64,5 +71,6 @@ export const WarningContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     font-size: 18px;
+    width: 70vw;
   }
 `;

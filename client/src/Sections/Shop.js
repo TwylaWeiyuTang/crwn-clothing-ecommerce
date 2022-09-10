@@ -60,6 +60,10 @@ const Left = styled.div`
         width: 80%;
         margin: 0 auto;
     }
+
+    @media screen and (max-width: 600px) {
+        width: 10vw !important;
+    }
 `
 
 const Right = styled.div`

@@ -20,6 +20,7 @@ export const CollectionItemContainer = styled.div`
 
   @media screen and (max-width: 800px) {
         width: 40vw;
+        margin-bottom: 2rem;
 
         &:hover {
           .image {
@@ -65,11 +66,11 @@ export const CollectionFooterContainer = styled.div`
 `;
 
 export const NameContainer = styled.span`
-  width: 90%;
+  max-width: 90%;
   margin-bottom: 15px;
 `;
 
 export const PriceContainer = styled.span`
-  width: 10%;
+  max-width: 15%;
   text-align: right;
 `;

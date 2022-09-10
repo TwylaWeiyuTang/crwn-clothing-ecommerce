@@ -13,6 +13,12 @@ const Section = styled.section`
 
     margin: 0 auto;
     margin-bottom: 5rem;
+
+    @media screen and (max-width: 600px) {
+        width: 100vw !important;
+        /* padding: 5vw; */
+        overflow-x: hidden;
+    }
 `
 
 const Title = styled.h1`
@@ -24,6 +30,10 @@ const Title = styled.h1`
     top: 1rem;
     left: 5%;
     z-index: 5;
+
+    @media screen and (max-width: 600px) {
+        font-size: ${props => props.theme.fontxxxl};
+    }
 `
 const Title2 = styled.h1`
     font-size: ${props => props.theme.fontBig};
@@ -35,6 +45,10 @@ const Title2 = styled.h1`
     top: 1rem;
     left: 4%;
     z-index: 5;
+
+    @media screen and (max-width: 600px) {
+        font-size: ${props => props.theme.fontxxxl};
+    }
 `
 
 const Left = styled.div`
@@ -46,6 +60,12 @@ const Left = styled.div`
     margin-top: 20%;
     text-align: left;
     font-family: 'Roboto', sans-serif;
+
+    @media screen and (max-width: 600px) {
+        font-size: ${props => props.theme.fontsm};
+        padding-left: 15px;
+        margin-top: 20vh;
+    }
 `
 const Right = styled.div`
     width: 50%;
@@ -68,6 +88,18 @@ const Right = styled.div`
         position: absolute;
         left: 80%;
         bottom: 30%;
+    }
+
+    @media screen and (max-width: 600px) {
+        .small-img-1 {
+            width: 60% !important;
+            right: 70% !important;
+        }
+
+        .small-img-2 {
+            width: 85% !important;
+            left: 40% !important;
+        }
     }
 `
 
